@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'G4geeks.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'geek2',
+        'NAME': 'geek3',
         'USER': 'root',
         'PASSWORD': 'asdf;lkj1',
         'HOST': 'localhost',

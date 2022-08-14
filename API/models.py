@@ -23,9 +23,9 @@ class UserModell(models.Model):
 class Word(models.Model):
     word_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     wordUser = models.ForeignKey('UserModell', related_name='speaker', on_delete=models.CASCADE, null=True)
+    spokenAudio = models.FileField()
     score = models.FloatField(default=0.0)
-    pronunciation = models.CharField(max_length=50, default="")
-    # currWord = "hello" # to be taken from database
+    spokenPhonetics = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return str(self.score)
