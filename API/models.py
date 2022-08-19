@@ -23,9 +23,12 @@ class UserModell(models.Model):
 class Word(models.Model):
     word_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     wordUser = models.ForeignKey('UserModell', related_name='speaker', on_delete=models.CASCADE, null=True)
-    spokenAudio = models.FileField()
+    word = models.CharField(max_length=50)
+    spokenAudio = models.FileField(upload_to='API/views/documents', blank=True)
+    spokenPhonetics = models.TextField(blank=True)
+    correctPhonetics = models.TextField(blank=True)
     score = models.FloatField(default=0.0)
-    spokenPhonetics = models.TextField(null=True, blank=True)
+
 
     def __str__(self):
-        return str(self.score)
+        return str(self.word)

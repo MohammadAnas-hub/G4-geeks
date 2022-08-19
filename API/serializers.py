@@ -20,4 +20,10 @@ class WordSerializer(serializers.ModelSerializer):
         model = Word
         fields = '__all__'
 
+        
+    # For Partial Updating
+    def __init__(self, *args, **kwargs):
+        kwargs['partial'] = True
+        super(WordSerializer, self).__init__(*args, **kwargs)
+
     

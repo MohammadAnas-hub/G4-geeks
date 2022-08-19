@@ -10,5 +10,7 @@ urlpatterns = [
     path("delete-user", UserView.DeleteUserView, name="DeleteUser"),
 
     # ======== Word Endpoints ========
-    path("create-word-view", WordView.CreateWordView, name="CreateWord")
+    path("create-word-view", WordView.CreateWordView, name="CreateWord"),
+    path("get-all-words", WordView.GetAllWordsView, name="GetAllWords"),
+    path("get-word-by-id", WordView.GeWordByIDView, name="GetWordById")
 ]
