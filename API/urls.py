@@ -1,5 +1,5 @@
 from django.urls import path
-from API.views import UserView, WordView
+from API.views import UserView, WordView, LoginView
 
 urlpatterns = [
     # ======== Users Enpoints =======
@@ -8,6 +8,10 @@ urlpatterns = [
     path("create-user", UserView.CreateUserView, name="CreateUser"),
     path("update-user", UserView.UpdateUserView, name="UpdateUser"),
     path("delete-user", UserView.DeleteUserView, name="DeleteUser"),
+
+    # ========= Login =========
+    path("login", LoginView.LoginVieww.as_view(), name="LoginApi"),
+    path('register', LoginView.RegisterView, name='Register'),
 
     # ======== Word Endpoints ========
     path("create-word-view", WordView.CreateWordView, name="CreateWord"),

@@ -15,6 +15,11 @@ class UserSerializer(serializers.ModelSerializer):
         kwargs['partial'] = True
         super(UserSerializer, self).__init__(*args, **kwargs)
 
+class RegisterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserModell
+        fields = ('userId', 'username', 'firstName', 'lastName','password', 'phone', 'email', 'userImg', 'desc', 'rating')
+
 class WordSerializer(serializers.ModelSerializer):
     class Meta:
         model = Word
