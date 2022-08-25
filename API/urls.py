@@ -16,5 +16,6 @@ urlpatterns = [
     # ======== Word Endpoints ========
     path("create-word-view", WordView.CreateWordView, name="CreateWord"),
     path("get-all-words", WordView.GetAllWordsView, name="GetAllWords"),
-    path("get-word-by-id", WordView.GeWordByIDView, name="GetWordById")
+    path("get-word-by-id", WordView.GeWordByIDView, name="GetWordById"),
+    path("get-word", WordView.GetWordView, name="GetWord"),
 ]

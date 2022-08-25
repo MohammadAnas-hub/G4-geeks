@@ -56,7 +56,7 @@ def score(say, path):
 f = open(sys.path[0]+'\documents\\'+"words.txt", "r")
 listOfWords = f.readlines()
 listOfWords = [x[:len(x)-1] for x in listOfWords]
-import random
+import random 
 
 @api_view(['POST'])
 def CreateWordView(request):
@@ -86,10 +86,32 @@ def GeWordByIDView(request):
     try:
         UserData = Word.objects.get(word_id=word_id)
         print(UserData.word)
-        filePath = sys.path[0]+'\\documents\\' + UserData.word + UserData.wordUser + '.wav'
+        # filePath = sys.path[0]+'\\documents\\' + UserData.word + '.wav'
+        path = str(UserData.word_id) + str(UserData.wordUser)
+        path = ''.join([x for x in path if x not in '-@.'])
+        # filePath = 'C:/Users/zubia/Documents/GitHub/G4-geeks/documents/sentence.wav'
+        filePath = 'C:/Users/zubia/Documents/GitHub/G4-geeks/documents/' + path +'.wav'
         UserData.score = str(score(UserData.word, filePath))
         serializer = WordSerializer(UserData, many=False)
         return Response({"data":serializer.data}, status=status.HTTP_200_OK)
     except Exception as err:
         print(err)
+
         return Response(str(err), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@api_view(['GET'])
+def GetWordView(request):
+    # Getting UserId in uuid (Queru Param ?word_id=)
+    word_id = request.query_params.get('word_id')
+    # If UserId is not provided
+    if word_id is None:
+        return Response({"data": "Word Id Not Provided"}, status=status.HTTP_400_BAD_REQUEST)
+    try:
+        UserData = Word.objects.get(word_id=word_id)  
+        data = {"data":UserData.word}
+        return Response(data, status=status.HTTP_200_OK)
+    except Exception as err:
+        print(err)
+        return Response(str(err), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        

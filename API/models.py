@@ -23,7 +23,7 @@ class UserModell(models.Model):
 class Word(models.Model):
     word_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     wordUser = models.ForeignKey('UserModell', related_name='speaker', on_delete=models.CASCADE, null=True)
-    word = models.CharField(max_length=50)
+    word = models.TextField()
     spokenAudio = models.FileField(upload_to='API/views/documents', blank=True)
     spokenPhonetics = models.TextField(blank=True)
     correctPhonetics = models.TextField(blank=True)
