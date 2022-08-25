@@ -53,9 +53,9 @@ def score(say, path):
     #print(flag)
 
 
-f = open(sys.path[0]+'\documents\\'+"words.txt", "r")
-listOfWords = f.readlines()
-listOfWords = [x[:len(x)-1] for x in listOfWords]
+# f = open(sys.path[0]+'\documents\\'+"words.txt", "r")
+# listOfWords = f.readlines()
+# listOfWords = [x[:len(x)-1] for x in listOfWords]
 import random
 
 @api_view(['POST'])
@@ -65,6 +65,16 @@ def CreateWordView(request):
 
     try:
         # ReqData["score"] = str(scoringFunction("hello", ReqData["pronunciation"]))
+        # print(111, ReqData["difficulty"])
+
+        if ReqData["difficulty"] == "Easy":
+            f = open(sys.path[0]+'\documents\\'+"words.txt", "r")
+            listOfWords = f.readlines()
+            listOfWords = [x[:len(x)-1] for x in listOfWords]
+        elif ReqData["difficulty"] == "Medium":
+            f = open(sys.path[0]+'\documents\\'+"sentences.txt", "r")
+            listOfWords = f.readlines()
+            listOfWords = [x[:len(x)-1] for x in listOfWords]
         ReqData["word"] = random.choice(listOfWords)
         ReqData["correctPhonetics"] = p.convert(ReqData["word"])
         serializers = WordSerializer(data=ReqData)
