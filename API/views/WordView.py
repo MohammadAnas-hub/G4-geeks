@@ -8,91 +8,11 @@ from difflib import SequenceMatcher
 
 import eng_to_ipa as p
 
-# def scoringFunction(correct, test):
-#     return SequenceMatcher(None, correct, test).ratio()
-
-# @api_view(['POST'])
-# def CreateWordView(request):
-#     # var = request.Files['file']
-#     ReqData = request.data
-#     # print(var)
-#     try:
-#         # ReqData["score"] = str(scoringFunction("hello", ReqData["pronunciation"]))
-#         ReqData["correctPhonetics"] = p.convert(ReqData["word"])
-#         serializers = WordSerializer(data=ReqData)
-#         if serializers.is_valid():
-#             serializers.save()
-#             return Response(serializers.data,status=status.HTTP_201_CREATED)
-#         return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
-#     except Exception as err:
-#         print(err)
-#         return Response(serializers.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
 @api_view(['GET'])
 def GetAllWordsView(request):
     AllUsers = Word.objects.all()
     serializer_class = WordSerializer(AllUsers, many=True)
     return Response({"data":serializer_class.data}, status=status.HTTP_200_OK)
-
-# @api_view(['PATCH'])
-# def UpdateUserAudio(request):
-#     # Getting UserId in uuid (Queru Param ?word_id=)
-#     word_id = request.query_params.get('word_id')
-#     # If word_id is not provided
-#     if word_id is None:
-#         return Response({"data": "Word Id Not Provided"}, status=status.HTTP_400_BAD_REQUEST)
-#     ReqData = request.data
-#     try:
-#         usrmodel = Word.objects.get(word_id=word_id)
-#         # serializers = UserSerializer(usrmodel, many=False)        
-#         # print(usrmodel)
-#         serializers = WordSerializer(instance=usrmodel,data=ReqData, many=False)
-
-#         if serializers.is_valid():
-#             serializers.save()
-#             return Response(serializers.data)
-#         else:
-#             return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
-#     except Exception as err:
-#         print("Error ==>", err)
-#         return Response(str(err), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
-
-
-# @api_view(['GET'])
-# def GeWordByIDView(request):
-#     # Getting UserId in uuid (Queru Param ?word_id=)
-#     word_id = request.query_params.get('word_id')
-#     # If UserId is not provided
-#     if word_id is None:
-#         return Response({"data": "Word Id Not Provided"}, status=status.HTTP_400_BAD_REQUEST)
-#     try:
-#         UserData = Word.objects.get(word_id=word_id)
-#         UserData.score = str(scoringFunction(UserData.correctPhonetics, UserData.spokenPhonetics))
-#         serializer = WordSerializer(UserData, many=False)
-#         return Response({"data":serializer.data}, status=status.HTTP_200_OK)
-#     except Exception as err:
-#         print(err)
-#         return Response(str(err), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -133,6 +53,11 @@ def score(say, path):
     #print(flag)
 
 
+f = open(sys.path[0]+'\documents\\'+"words.txt", "r")
+listOfWords = f.readlines()
+listOfWords = [x[:len(x)-1] for x in listOfWords]
+import random
+
 @api_view(['POST'])
 def CreateWordView(request):
 
@@ -140,6 +65,7 @@ def CreateWordView(request):
 
     try:
         # ReqData["score"] = str(scoringFunction("hello", ReqData["pronunciation"]))
+        ReqData["word"] = random.choice(listOfWords)
         ReqData["correctPhonetics"] = p.convert(ReqData["word"])
         serializers = WordSerializer(data=ReqData)
         if serializers.is_valid():
@@ -160,7 +86,7 @@ def GeWordByIDView(request):
     try:
         UserData = Word.objects.get(word_id=word_id)
         print(UserData.word)
-        filePath = sys.path[0]+r'\\documents\library.wav'
+        filePath = sys.path[0]+'\\documents\\' + UserData.word + UserData.wordUser + '.wav'
         UserData.score = str(score(UserData.word, filePath))
         serializer = WordSerializer(UserData, many=False)
         return Response({"data":serializer.data}, status=status.HTTP_200_OK)
